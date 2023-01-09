@@ -310,7 +310,6 @@ kollector:
        cpu: 500m
        memory: 500Mi
 
-
   env:
   # -- print in verbose mode (print all reported data)
   - name: PRINT_REPORT
