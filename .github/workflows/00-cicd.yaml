@@ -8,10 +8,10 @@ on:
         default: true
         type: boolean
       IMAGE_TAG:
-        required: true
+        # required: true
         type: string
       COMPONENT_NAME:
-        required: true
+        # required: true
         type: string
       HELM_E2E_TEST:
         required: true
@@ -20,7 +20,24 @@ on:
     # secrets: inherit
 
 jobs:
+  input-validator:
+    runs-on: ubuntu-latest
+    steps:
+      - name: input validator
+        run: |
+          if [ ${{ inputs.CHANGE_TAG }} = true ]; then
+            echo "CHANGE_TAG = true, checking if inputs COMPONENT_NAME and IMAGE_TAG are not null"
+            echo "COMPONENT_NAME = ${{ inputs.COMPONENT_NAME }}"
+            echo "IMAGE_TAG = ${{ inputs.IMAGE_TAG }}"
+            if [[ -z ${{ inputs.COMPONENT_NAME }} || -z ${{ inputs.IMAGE_TAG }} ]]; then
+              echo "one or more inputs are undefined"
+              exit 1
+            fi
+            echo "We are good to go"
+          fi
+
   helm-values-update:
+    needs: input-validator
     uses: ./.github/workflows/01-update_tag.yaml
     with:
       CHANGE_TAG: ${{ inputs.CHANGE_TAG }}
