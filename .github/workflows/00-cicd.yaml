@@ -3,6 +3,10 @@ name: 00-CICD-helm-chart
 on:
   workflow_dispatch:
     inputs:
+      CHANGE_TAG:
+        required: true
+        default: true
+        type: boolean
       IMAGE_TAG:
         required: true
         type: string
@@ -19,6 +23,7 @@ jobs:
   helm-values-update:
     uses: ./.github/workflows/01-update_tag.yaml
     with:
+      CHANGE_TAG: ${{ inputs.CHANGE_TAG }}
       IMAGE_TAG: ${{ inputs.IMAGE_TAG }}
       COMPONENT_NAME: ${{ inputs.COMPONENT_NAME }}
       MODE: patch

@@ -9,6 +9,9 @@ on:
 
   workflow_call:
     inputs:
+      CHANGE_TAG:
+        required: true
+        type: boolean
       IMAGE_TAG:
         required: true
         type: string
@@ -37,6 +40,7 @@ jobs:
     steps:
       - name: echo-input-parameters
         run:  |
+          echo "CHANGE_TAG = ${{ inputs.CHANGE_TAG }}"
           echo "IMAGE_TAG = ${{ inputs.IMAGE_TAG }}"
           echo "COMPONENT_NAME = ${{ inputs.COMPONENT_NAME }}"
           echo "MODE = ${{ inputs.MODE }}"
@@ -46,6 +50,7 @@ jobs:
         name: Checkout
 
       - name: change tag
+        if: ${{ inputs.CHANGE_TAG }}
         uses: matanshk/yaml-tag-changer@main
         with:
           filename: charts/kubescape-cloud-operator/values.yaml
@@ -53,6 +58,7 @@ jobs:
           tag: ${{ inputs.IMAGE_TAG }}
 
       - name: cat-file-values-file
+        if: ${{ inputs.CHANGE_TAG }}
         run: cat charts/kubescape-cloud-operator/values.yaml
 
       - name: Bump helm chart version
