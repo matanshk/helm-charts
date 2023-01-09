@@ -30,7 +30,7 @@ jobs:
             echo "COMPONENT_NAME = ${{ inputs.COMPONENT_NAME }}"
             echo "IMAGE_TAG = ${{ inputs.IMAGE_TAG }}"
             if [[ "${{ inputs.COMPONENT_NAME }}" = "" ]] || [[ "${{ inputs.IMAGE_TAG }}" = "" ]]; then
-              echo "one or more inputs are undefined"
+              echo "One or more inputs are undefined"
               exit 1
             fi
             echo "We are good to go"
