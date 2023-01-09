@@ -38,9 +38,9 @@ jobs:
             echo "CHANGE_TAG = false, the workflow will not change any component image tag"
           fi
 
-  helm-values-update:
+  helm-chart-update:
     needs: input-validator
-    uses: ./.github/workflows/01-update_tag.yaml
+    uses: ./.github/workflows/01-chart-update.yaml
     with:
       CHANGE_TAG: ${{ inputs.CHANGE_TAG }}
       IMAGE_TAG: ${{ inputs.IMAGE_TAG }}
@@ -50,7 +50,7 @@ jobs:
     secrets: inherit
 
   e2e-test:
-    needs: helm-values-update
+    needs: helm-chart-update
     if: ${{ inputs.HELM_E2E_TEST == true }}
     uses: ./.github/workflows/02-e2e-test.yaml
     with:
@@ -73,9 +73,9 @@ jobs:
           UPDATE_LABELS: ""
 
   helm-release: 
-    needs: [helm-values-update, merge-to-master]
+    needs: [helm-chart-update, merge-to-master]
     if: ${{ (always() && (contains(needs.*.result, 'success') || contains(needs.*.result, 'skipped')) && !(contains(needs.*.result, 'failure')) && !(contains(needs.*.result, 'cancelled'))) }}
     with:
-      COMMIT_REF: ${{ needs.helm-values-update.outputs.COMMIT_REF }}
+      COMMIT_REF: ${{ needs.helm-chart-update.outputs.COMMIT_REF }}
     uses: ./.github/workflows/03-helm-release.yaml
     secrets: inherit
