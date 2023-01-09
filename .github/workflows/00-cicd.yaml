@@ -34,6 +34,8 @@ jobs:
               exit 1
             fi
             echo "We are good to go"
+          elif [ ${{ inputs.CHANGE_TAG }} = false ]; then
+            echo "CHANGE_TAG = false, the workflow will not change any component image tag"
           fi
 
   helm-values-update:
