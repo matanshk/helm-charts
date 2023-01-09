@@ -29,7 +29,7 @@ on:
     outputs:
       COMMIT_REF:
         description: "latest commit sha"
-        value: ${{ jobs.update-helm-values.outputs.COMMIT_REF}}
+        value: ${{ jobs.update-helm-values.outputs.COMMIT_REF }}
 
 
 jobs:
