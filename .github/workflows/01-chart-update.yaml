@@ -79,7 +79,7 @@ jobs:
           branch: dev
           base: master
           delete-branch: false
-          title: "Pulling ${{ github.ref }} into master - ${{ inputs.COMPONENT_NAME }}:${{ inputs.IMAGE_TAG }}"
+          title: "Pulling ${{ github.ref_name }} branch into master - ${{ inputs.COMPONENT_NAME }}:${{ inputs.IMAGE_TAG }}"
           draft: false
 
       - name: get latest commit sha
