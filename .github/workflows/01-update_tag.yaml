@@ -33,7 +33,7 @@ on:
 
 
 jobs:
-  update-helm-values:
+  update-helm-chart:
     outputs:
       COMMIT_REF: ${{ steps.commit-ref.outputs.COMMIT_REF }}
     runs-on: ubuntu-latest
