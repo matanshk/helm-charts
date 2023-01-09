@@ -29,7 +29,7 @@ jobs:
             echo "CHANGE_TAG = true, checking if inputs COMPONENT_NAME and IMAGE_TAG are not null"
             echo "COMPONENT_NAME = ${{ inputs.COMPONENT_NAME }}"
             echo "IMAGE_TAG = ${{ inputs.IMAGE_TAG }}"
-            if [ "${{ inputs.COMPONENT_NAME }}" = '' || "${{ inputs.IMAGE_TAG }}" = '' ]]; then
+            if [ "${{ inputs.COMPONENT_NAME }}" = "" || "${{ inputs.IMAGE_TAG }}" = "" ]]; then
               echo "one or more inputs are undefined"
               exit 1
             fi
